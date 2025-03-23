@@ -18,6 +18,6 @@ public class WallCell : Cell
     }
     public override string ToString()
     {
-        return "#";
+        return "\u2588";
     }
 }

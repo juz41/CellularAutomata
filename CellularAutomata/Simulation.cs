@@ -5,7 +5,7 @@ public class Simulation
     private Board _board;
     public Simulation()
     {
-        _board = new Board();
+        _board = new Board(100,400);
     }
     public void Run()
     {
@@ -13,20 +13,15 @@ public class Simulation
         {
             Console.Clear();
             _board.UpdateBoard();
-            ShowBoard();
+            _board.ShowBoard();
             Console.Read();
         }
     }
     
-    public void ShowBoard()
+    static void Main(string[] args)
     {
-        for (int i = 0; i < _board.board.GetLength(0); i++)
-        {
-            for (int j = 0; j < _board.board.GetLength(1); j++)
-            {
-                Console.Write(_board.board[i, j]);
-            }
-            Console.WriteLine();
-        }
+        Simulation simulation = new Simulation();
+        simulation.Run();
     }
 }
+
