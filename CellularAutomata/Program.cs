@@ -1,5 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using CellularAutomata;
 
-Console.WriteLine("Hello, World!");
-Console.WriteLine("Hello, World!");
-Console.WriteLine("Hello, World!");
+Simulation simulation = new Simulation();
+simulation.Run();
