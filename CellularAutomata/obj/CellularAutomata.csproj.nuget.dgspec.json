@@ -1,0 +1,66 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/julian/Documents/coding/C#/CellularAutomata/CellularAutomata/CellularAutomata.csproj": {}
+  },
+  "projects": {
+    "/home/julian/Documents/coding/C#/CellularAutomata/CellularAutomata/CellularAutomata.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/julian/Documents/coding/C#/CellularAutomata/CellularAutomata/CellularAutomata.csproj",
+        "projectName": "CellularAutomata",
+        "projectPath": "/home/julian/Documents/coding/C#/CellularAutomata/CellularAutomata/CellularAutomata.csproj",
+        "packagesPath": "/home/julian/.nuget/packages/",
+        "outputPath": "/home/julian/Documents/coding/C#/CellularAutomata/CellularAutomata/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/julian/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/home/julian/.dotnet/sdk/8.0.401/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
