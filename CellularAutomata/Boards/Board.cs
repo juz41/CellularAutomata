@@ -30,14 +30,13 @@ public class Board
             }
         }
     }
-
     public void UpdateBoard()
     {
         for (int i = 1; i <= Height; i++)
         {
             for (int j = 1; j <= Width; j++)
             {
-                Cells[i, j].UpdateCell(GetNeighbors(i,j));
+                Cells[i, j].UpdateCell(AliveNeighbors(i,j));
             }
         }
         for (int i = 1; i <= Height; i++)
@@ -48,13 +47,15 @@ public class Board
             }
         }
     }
-
-    public int GetNeighbors(int i, int j)
+    public int[] AliveNeighbors(int i, int j)
     {
-        State[] tmp = {Cells[i - 1, j - 1].Current, Cells[i - 1, j].Current, Cells[i - 1, j + 1].Current,
+        State[] neighbours = {Cells[i - 1, j - 1].Current, Cells[i - 1, j].Current, Cells[i - 1, j + 1].Current,
             Cells[i, j - 1].Current, Cells[i, j + 1].Current,
             Cells[i + 1, j - 1].Current, Cells[i + 1, j].Current, Cells[i + 1, j + 1].Current};
-        return tmp.Count(c => c == State.Alive);
+        int[] states = new int[Enum.GetNames(typeof(State)).Length];
+        foreach (State state in neighbours)
+            states[(int)state]++;
+        return states;
     }
     public void ShowBoard()
     {

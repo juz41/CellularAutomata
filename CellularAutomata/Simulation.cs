@@ -5,7 +5,7 @@ public class Simulation
     private Board _board;
     public Simulation()
     {
-        _board = new Board(100,400);
+        _board = new Board(20,40);
     }
     public void Run()
     {

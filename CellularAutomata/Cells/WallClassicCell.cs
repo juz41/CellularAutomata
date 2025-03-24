@@ -7,7 +7,7 @@ public class WallClassicCell : Cell
         Current = State.Dead;
         Next = State.Dead;
     }
-    public override void UpdateCell(int alive)
+    public override void UpdateCell(int[] states)
     {
         return;
     }

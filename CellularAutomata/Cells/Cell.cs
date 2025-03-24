@@ -10,7 +10,7 @@ public abstract class Cell
         this.Current = current;
         this.Next = next;
     }
-    public abstract void UpdateCell(int alive);
+    public abstract void UpdateCell(int[] states);
     public void MoveStatus()
     {
         Current = Next;
