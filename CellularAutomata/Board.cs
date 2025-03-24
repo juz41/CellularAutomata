@@ -13,20 +13,20 @@ public class Board
         Random rand = new Random();
         for (int i = 0; i < Height+2; i++)
         {
-            Cells[i, 0] = new WallCell();
-            Cells[i, Width+1] = new WallCell();
+            Cells[i, 0] = new WallClassicCell();
+            Cells[i, Width+1] = new WallClassicCell();
         }
         for (int j = 0; j < Width+2; j++)
         {
-            Cells[0, j] = new WallCell();
-            Cells[Height+1, j] = new WallCell();
+            Cells[0, j] = new WallClassicCell();
+            Cells[Height+1, j] = new WallClassicCell();
         }
         
         for (int i = 1; i <= Height; i++)
         {
             for (int j = 1; j <= Width; j++)
             {
-                Cells[i, j] = new Cell(rand.NextDouble() >= 0.5);
+                Cells[i, j] = new ClassicCell((State) rand.Next(0, 2));
             }
         }
     }
@@ -51,10 +51,10 @@ public class Board
 
     public int GetNeighbors(int i, int j)
     {
-        bool[] tmp = {Cells[i - 1, j - 1].IsAlive, Cells[i - 1, j].IsAlive, Cells[i - 1, j + 1].IsAlive,
-            Cells[i, j - 1].IsAlive, false, Cells[i, j + 1].IsAlive,
-            Cells[i + 1, j - 1].IsAlive, Cells[i + 1, j].IsAlive, Cells[i + 1, j + 1].IsAlive};
-        return tmp.Count(c => c);
+        State[] tmp = {Cells[i - 1, j - 1].Current, Cells[i - 1, j].Current, Cells[i - 1, j + 1].Current,
+            Cells[i, j - 1].Current, Cells[i, j + 1].Current,
+            Cells[i + 1, j - 1].Current, Cells[i + 1, j].Current, Cells[i + 1, j + 1].Current};
+        return tmp.Count(c => c == State.Alive);
     }
     public void ShowBoard()
     {
@@ -62,7 +62,7 @@ public class Board
         {
             for (int j = 0; j < this.Cells.GetLength(1); j++)
             {
-                Console.Write(this.Cells[i, j]);
+                Console.Write(this.Cells[i, j].Icon());
             }
             Console.WriteLine();
         }
