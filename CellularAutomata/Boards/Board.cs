@@ -5,7 +5,7 @@ public class Board
     public readonly int Height;
     public readonly int Width;
     public readonly Cell[,] Cells;
-    public Board(int height=10, int width=10)
+    public Board(int height, int width)
     {
         this.Height = height;
         this.Width = width;
