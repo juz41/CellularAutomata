@@ -1,6 +1,6 @@
-namespace CellularAutomata;
+namespace CellularAutomata.Boards;
 
-public class HexagonalBoard : IBoard
+public class HexagonalBoard<T> : IBoard<T> where T : Enum, IConvertible
 {
     public void UpdateBoard()
     {

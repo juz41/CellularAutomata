@@ -1,32 +1,36 @@
+using CellularAutomata.Boards;
+using CellularAutomata.Cells;
+using CellularAutomata.States;
+
 namespace CellularAutomata;
 
-public class Board
+public class Board<T> : IBoard<T> where T : Enum, IConvertible
 {
     public readonly int Height;
     public readonly int Width;
-    public readonly Cell[,] Cells;
-    public Board(int height, int width)
+    public readonly Cell<T>[,] Cells;
+    public Board(int height, int width, string rule)
     {
         this.Height = height;
         this.Width = width;
-        Cells = new Cell[Height+2, Width+2];
+        Cells = new Cell<T>[Height+2, Width+2];
         Random rand = new Random();
         for (int i = 0; i < Height+2; i++)
         {
-            Cells[i, 0] = new WallClassicCell();
-            Cells[i, Width+1] = new WallClassicCell();
+            Cells[i, 0] = new WallCell<T>(rule);
+            Cells[i, Width+1] = new WallCell<T>(rule);
         }
         for (int j = 0; j < Width+2; j++)
         {
-            Cells[0, j] = new WallClassicCell();
-            Cells[Height+1, j] = new WallClassicCell();
+            Cells[0, j] = new WallCell<T>(rule);
+            Cells[Height+1, j] = new WallCell<T>(rule);
         }
         
         for (int i = 1; i <= Height; i++)
         {
             for (int j = 1; j <= Width; j++)
             {
-                Cells[i, j] = new ClassicCell((State) rand.Next(0, 2));
+                Cells[i, j] = new Cell<T>(rule, rand.Next()%2);
             }
         }
     }
@@ -49,12 +53,12 @@ public class Board
     }
     public int[] AliveNeighbors(int i, int j)
     {
-        State[] neighbours = {Cells[i - 1, j - 1].Current, Cells[i - 1, j].Current, Cells[i - 1, j + 1].Current,
+        T[] neighbours = {Cells[i - 1, j - 1].Current, Cells[i - 1, j].Current, Cells[i - 1, j + 1].Current,
             Cells[i, j - 1].Current, Cells[i, j + 1].Current,
             Cells[i + 1, j - 1].Current, Cells[i + 1, j].Current, Cells[i + 1, j + 1].Current};
-        int[] states = new int[Enum.GetNames(typeof(State)).Length];
-        foreach (State state in neighbours)
-            states[(int)state]++;
+        int[] states = new int[Enum.GetNames(typeof(Basic)).Length];
+        foreach (T state in neighbours)
+            states[(int)(object)state]++;
         return states;
     }
     public void ShowBoard()

@@ -1,15 +1,16 @@
+using CellularAutomata.States;
 namespace CellularAutomata;
 
 public class Simulation
 {
-    private Board _board;
+    private Board<Basic> _board;
     public Simulation()
     {
-        _board = new Board(20,40);
+        _board = new Board<Basic>(20,40, "3/23");
     }
     public void Run()
     {
-        for (int i=0;;i++)
+        for (;;)
         {
             Console.Clear();
             _board.UpdateBoard();
