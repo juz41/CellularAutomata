@@ -8,7 +8,8 @@ public class Board<T> : IBoard<T> where T : Enum, IConvertible
     public readonly int Height;
     public readonly int Width;
     public readonly Cell<T>[,] Cells;
-    public Board(int height, int width, string rule)
+    private readonly int _n = Enum.GetNames(typeof(T)).Length;
+    public Board(int height, int width, (int a, int b)[,,] rule)
     {
         this.Height = height;
         this.Width = width;
@@ -16,13 +17,13 @@ public class Board<T> : IBoard<T> where T : Enum, IConvertible
         Random rand = new Random();
         for (int i = 0; i < Height+2; i++)
         {
-            Cells[i, 0] = new WallCell<T>(rule);
-            Cells[i, Width+1] = new WallCell<T>(rule);
+            Cells[i, 0] = new WallCell<T>();
+            Cells[i, Width+1] = new WallCell<T>();
         }
         for (int j = 0; j < Width+2; j++)
         {
-            Cells[0, j] = new WallCell<T>(rule);
-            Cells[Height+1, j] = new WallCell<T>(rule);
+            Cells[0, j] = new WallCell<T>();
+            Cells[Height+1, j] = new WallCell<T>();
         }
         
         for (int i = 1; i <= Height; i++)
@@ -39,7 +40,7 @@ public class Board<T> : IBoard<T> where T : Enum, IConvertible
         {
             for (int j = 1; j <= Width; j++)
             {
-                Cells[i, j].UpdateCell(AliveNeighbors(i,j));
+                Cells[i, j].UpdateCell(new Neighborhood<Cell<T> ,T>(AliveNeighbors(i,j)));
             }
         }
         for (int i = 1; i <= Height; i++)
