@@ -1,4 +1,4 @@
-namespace CellularAutomata;
+namespace CellularAutomata.Cells;
 
 public class Cell<T> where T : Enum, IConvertible
 {

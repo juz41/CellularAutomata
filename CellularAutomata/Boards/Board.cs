@@ -1,8 +1,7 @@
-using CellularAutomata.Boards;
 using CellularAutomata.Cells;
 using CellularAutomata.States;
 
-namespace CellularAutomata;
+namespace CellularAutomata.Boards;
 
 public class Board<T> : IBoard<T> where T : Enum, IConvertible
 {

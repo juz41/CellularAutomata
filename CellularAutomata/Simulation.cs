@@ -1,4 +1,5 @@
 using CellularAutomata.States;
+using CellularAutomata.Boards;
 namespace CellularAutomata;
 
 public class Simulation
