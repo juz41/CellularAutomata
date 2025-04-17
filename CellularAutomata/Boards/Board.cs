@@ -2,14 +2,14 @@ using CellularAutomata.Cells;
 using CellularAutomata.States;
 
 namespace CellularAutomata.Boards;
-
 public class Board<T> : IBoard<T> where T : Enum, IConvertible
 {
     public readonly int Height;
     public readonly int Width;
     public readonly Cell<T>[,] Cells;
     private readonly int _n = Enum.GetNames(typeof(T)).Length;
-    public Board(int height, int width, (int a, int b)[,,] rule)
+    public event EventHandler EveryRound;
+    public Board(int height, int width, List<(int a, int b)>[,,] rule)
     {
         this.Height = height;
         this.Width = width;
@@ -40,7 +40,7 @@ public class Board<T> : IBoard<T> where T : Enum, IConvertible
         {
             for (int j = 1; j <= Width; j++)
             {
-                Cells[i, j].UpdateCell(new Neighborhood<Cell<T> ,T>(AliveNeighbors(i,j)));
+                Cells[i, j].UpdateCell(new Neighborhood<Cell<T>, T>(AliveNeighbors(i,j)));
             }
         }
         for (int i = 1; i <= Height; i++)
@@ -61,15 +61,8 @@ public class Board<T> : IBoard<T> where T : Enum, IConvertible
             states[(int)(object)state]++;
         return states;
     }
-    public void ShowBoard()
+    public void MoveRound()
     {
-        for (int i = 0; i < this.Cells.GetLength(0); i++)
-        {
-            for (int j = 0; j < this.Cells.GetLength(1); j++)
-            {
-                Console.Write(this.Cells[i, j].Icon());
-            }
-            Console.WriteLine();
-        }
+        EveryRound?.Invoke(this, EventArgs.Empty);
     }
 }

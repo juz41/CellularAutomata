@@ -12,7 +12,7 @@ public class HexagonalBoard<T> : IBoard<T> where T : Enum, IConvertible
         throw new NotImplementedException();
     }
 
-    public void ShowBoard()
+    public void MoveRound()
     {
         throw new NotImplementedException();
     }
