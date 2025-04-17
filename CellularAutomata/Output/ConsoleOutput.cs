@@ -1,11 +1,11 @@
 using CellularAutomata.Boards;
 
-namespace CellularAutomata.Console;
+namespace CellularAutomata.Output;
 
 public class ConsoleOutput<T> where T : Enum, IConvertible
 {
-    public Board<T> Board;
-    public ConsoleOutput(Board<T> board)
+    public IBoard<T> Board;
+    public ConsoleOutput(IBoard<T> board)
     {
         Board = board;
     }
@@ -16,7 +16,7 @@ public class ConsoleOutput<T> where T : Enum, IConvertible
         {
             for (int col = 1; col <= Board.Width; col++)
             {
-                System.Console.Write(Board.Cells[row, col].Icon());
+                System.Console.Write(Board[row, col].Icon());
             }
             System.Console.WriteLine();
         }

@@ -1,12 +1,11 @@
 using CellularAutomata.States;
 using CellularAutomata.Boards;
-using CellularAutomata.Console;
+using CellularAutomata.Output;
 
 namespace CellularAutomata;
 
 public class Simulation
 {
-    private ConsoleOutput<Basic> _output;
     private Board<Basic> _board;
 
     public Simulation()
@@ -39,21 +38,27 @@ public class Simulation
 
 
         _board = new Board<Basic>(20, 40, rule);
-        _output = new ConsoleOutput<Basic>(_board);
     }
 
     public void Run()
     {
+        var _output = new ConsoleOutput<Basic>(_board);
+        var _output2 = new GifOutput<Basic>(_board);
         _board.EveryRound += (s, e) => _output.ShowBoard();
-        _board.EveryRound += (s, e) => System.Console.Read();
-        _output.ShowBoard();
-        System.Console.WriteLine("a");
-        System.Console.Read();
+        _board.EveryRound += (s, e) => _output2.ShowBoard();
+        // _board.EveryRound += (s, e) => System.Console.Read();
         for (;;)
         {
             _board.UpdateBoard();
             _board.MoveRound();
+            var key = Console.ReadKey(true);
+            if (key.Key == ConsoleKey.Q)
+            {
+                break;
+            }
         }
+
+        _output2.Save();
     }
 
     static void Main(string[] args)

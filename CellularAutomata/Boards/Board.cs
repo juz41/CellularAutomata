@@ -4,8 +4,14 @@ using CellularAutomata.States;
 namespace CellularAutomata.Boards;
 public class Board<T> : IBoard<T> where T : Enum, IConvertible
 {
-    public readonly int Height;
-    public readonly int Width;
+    public int Height { get; private set; }
+
+    public Cell<T> this[int i, int j]
+    {
+        get => Cells[i,j];
+    }
+
+    public int Width { get; private set; }
     public readonly Cell<T>[,] Cells;
     private readonly int _n = Enum.GetNames(typeof(T)).Length;
     public event EventHandler EveryRound;
