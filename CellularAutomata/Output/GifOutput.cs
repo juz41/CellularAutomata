@@ -15,14 +15,11 @@ public class GifOutput<T> where T : Enum, IConvertible
     private readonly int _imageWidth;
     private readonly int _imageHeight;
     private readonly Color[]? _mapping;
+    private readonly ImageOutput<T> _image;
 
     public GifOutput(IBoard<T> board, int cellSize = 1, Color[]? mapping = null)
     {
-        if (mapping == null)
-            this._mapping = [Color.Black, Color.White];
-        else
-            this._mapping = mapping;
-        
+        _image = new ImageOutput<T>(board, cellSize, mapping);
         Board = board;
         this._cellSize = cellSize;
         _imageWidth = Board.Width * cellSize;
@@ -32,20 +29,8 @@ public class GifOutput<T> where T : Enum, IConvertible
 
     public void ShowBoard()
     {
-        using (var image = new Image<Rgba32>(_imageWidth, _imageHeight))
+        using (var image = _image.GenerateImage())
         {
-            for (int row = 1; row <= Board.Height; row++)
-            {
-                for (int col = 1; col <= Board.Width; col++)
-                {
-                    for (int i = 0; i < _cellSize; i++)
-                    for (int j = 0; j < _cellSize; j++)
-                    {
-                        // Console.WriteLine($"{GetColor(Board[row, col])} {Board[row, col].Icon()}");
-                        image[(col-1)*_cellSize+i, (row-1)*_cellSize+j] = GetColor(Board[row, col]);
-                    }
-                }
-            }
             image.Frames.RootFrame.Metadata.GetGifMetadata().FrameDelay = FrameDuration;
             _gif.Frames.AddFrame(image.Frames.RootFrame);
         }

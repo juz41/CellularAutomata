@@ -27,9 +27,7 @@ public class ImageOutput<T> where T : Enum, IConvertible
 
     public void ShowBoard(string filename = "output.png")
     {
-        int imageWidth = Board.Width * _cellSize;
-        int imageHeight = Board.Height * _cellSize;
-        using (var image = new Image<Rgba32>(imageWidth, imageHeight))
+        using (var image = new Image<Rgba32>(_imageWidth, _imageHeight))
         {
             for (int row = 1; row <= Board.Height; row++)
             {
@@ -60,6 +58,7 @@ public class ImageOutput<T> where T : Enum, IConvertible
         }
         return image;
     }
+    
     private Color GetColor(Cell<T> cell)
     {
         int iconValue = cell.Icon();
