@@ -1,23 +1,23 @@
 namespace CellularAutomata.Cells
 {
-    public class Neighborhood<T, U> 
-        where T : Cell<U> 
-        where U : Enum, IConvertible
+    public class Neighborhood<T, TU> 
+        where T : Cell<TU> 
+        where TU : Enum, IConvertible
     {
-        private readonly int _n = Enum.GetNames(typeof(U)).Length;
-        private int[] states;
+        private readonly int _n = Enum.GetNames(typeof(TU)).Length;
+        private readonly int[] _states;
 
         public Neighborhood(int[] states)
         {
-            this.states = states;
+            this._states = states;
         }
         public int this[int i]
         {
-            get => states[i % _n];
+            get => _states[i % _n];
         }
-        public int GetNumber(U state)
+        public int GetNumber(TU state)
         {
-            return states[(int)(object)state];
+            return _states[(int)(object)state];
         }   
     }
 }

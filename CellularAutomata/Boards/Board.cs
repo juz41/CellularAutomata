@@ -15,7 +15,7 @@ public class Board<T> : IBoard<T> where T : Enum, IConvertible
     public readonly Cell<T>[,] Cells;
     private readonly int _n = Enum.GetNames(typeof(T)).Length;
     public event EventHandler EveryRound;
-    public Board(int height, int width, List<(int a, int b)>[,,] rule)
+    public Board(int height, int width, List<(int a, int b)>[,,]? rule)
     {
         this.Height = height;
         this.Width = width;
@@ -36,7 +36,7 @@ public class Board<T> : IBoard<T> where T : Enum, IConvertible
         {
             for (int j = 1; j <= Width; j++)
             {
-                Cells[i, j] = new Cell<T>(rule, rand.Next()%2);
+                Cells[i, j] = new Cell<T>(rule, rand.Next()%_n);
             }
         }
     }
@@ -62,9 +62,13 @@ public class Board<T> : IBoard<T> where T : Enum, IConvertible
         T[] neighbours = {Cells[i - 1, j - 1].Current, Cells[i - 1, j].Current, Cells[i - 1, j + 1].Current,
             Cells[i, j - 1].Current, Cells[i, j + 1].Current,
             Cells[i + 1, j - 1].Current, Cells[i + 1, j].Current, Cells[i + 1, j + 1].Current};
-        int[] states = new int[Enum.GetNames(typeof(Basic)).Length];
+        int[] states = new int[Enum.GetNames(typeof(T)).Length];
         foreach (T state in neighbours)
+        {
+            if (state is WallCell<T>)
+                continue;
             states[(int)(object)state]++;
+        }
         return states;
     }
     public void MoveRound()

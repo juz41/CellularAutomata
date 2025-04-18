@@ -4,9 +4,9 @@ public class Cell<T> where T : Enum, IConvertible
 {
     public T Current;
     public T Next;
-    private readonly List<(int a, int b)>[,,] _rules;
+    private readonly List<(int a, int b)>[,,]? _rules;
     private readonly int _n = Enum.GetNames(typeof(T)).Length;
-    public Cell(List<(int a, int b)>[,,] rules, int state=0)
+    public Cell(List<(int a, int b)>[,,]? rules, int state=0)
     {
         this.Current = (T)(object)(state % _n);
         this.Next = (T)(object)(0);
