@@ -10,12 +10,12 @@ namespace CellularAutomata;
 public class Simulation
 {
     private Board<Basic> _board;
-    private const int Length = 1000;
+    private const int Length = 100;
     private static readonly (int, int) CatchNone = (-1, -1);
 
     public Simulation()
     {
-        _board = new Board<Basic>(100, 100, Rules.BasicClassic());
+        _board = new Board<Basic>(100, 100, Rules.BasicSeeds());
     }
 
     public void Run()
@@ -41,7 +41,7 @@ public class Simulation
         double percent = (double)progress / total;
         int filledBars = (int)(percent * barWidth);
         string bar = new string('#', filledBars) + new string('-', barWidth - filledBars);
-        Console.Write($"[{bar}] {filledBars}/{total}");
+        Console.Write($"[{bar}] {filledBars}/{barWidth}");
     }
 
     static void Main(string[] args)
