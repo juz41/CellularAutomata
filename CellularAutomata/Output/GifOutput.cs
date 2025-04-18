@@ -22,6 +22,7 @@ public class GifOutput<T> where T : Enum, IConvertible
             this._mapping = [Color.Black, Color.White];
         else
             this._mapping = mapping;
+        
         Board = board;
         this._cellSize = cellSize;
         _imageWidth = Board.Width * cellSize;
@@ -39,7 +40,10 @@ public class GifOutput<T> where T : Enum, IConvertible
                 {
                     for (int i = 0; i < _cellSize; i++)
                     for (int j = 0; j < _cellSize; j++)
+                    {
+                        // Console.WriteLine($"{GetColor(Board[row, col])} {Board[row, col].Icon()}");
                         image[(col-1)*_cellSize+i, (row-1)*_cellSize+j] = GetColor(Board[row, col]);
+                    }
                 }
             }
             image.Frames.RootFrame.Metadata.GetGifMetadata().FrameDelay = FrameDuration;

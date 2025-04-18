@@ -9,11 +9,20 @@ public class ImageOutput<T> where T : Enum, IConvertible
 {
     public IBoard<T> Board;
     private readonly int _cellSize;
+    private readonly int _imageWidth;
+    private readonly int _imageHeight;
+    private readonly Color[]? _mapping;
 
-    public ImageOutput(IBoard<T> board, int cellSize = 1)
+    public ImageOutput(IBoard<T> board, int cellSize = 1, Color[]? mapping = null)
     {
+        if (mapping == null)
+            this._mapping = [Color.Black, Color.White];
+        else
+            this._mapping = mapping;
         Board = board;
         this._cellSize = cellSize;
+        _imageWidth = Board.Width * cellSize;
+        _imageHeight = Board.Height * cellSize;
     }
 
     public void ShowBoard(string filename = "output.png")
@@ -54,11 +63,6 @@ public class ImageOutput<T> where T : Enum, IConvertible
     private Color GetColor(Cell<T> cell)
     {
         int iconValue = cell.Icon();
-        return iconValue switch
-        {
-            0 => Color.Black, // Dead cell (black)
-            1 => Color.White, // Alive cell (white)
-            _ => Color.Red // Fallback (red)
-        };
+        return _mapping[iconValue];
     }
 }
