@@ -10,7 +10,7 @@ namespace CellularAutomata;
 public class Simulation
 {
     private Board<Basic> _board;
-    private const int Length = 100;
+    private const int Length = 1000;
     private static readonly (int, int) CatchNone = (-1, -1);
 
     public Simulation()
@@ -21,7 +21,7 @@ public class Simulation
     public void Run()
     {
         // var output = new ConsoleOutput<Basic>(_board);
-        var output2 = new GifOutput<Basic>(_board, 8, [Color.Black, Color.Yellow]);
+        var output2 = new GifOutput<Basic>(_board, 10, [Color.Black, Color.Yellow]);
         // _board.EveryRound += (s, e) => output.ShowBoard();
         _board.EveryRound += (s, e) => output2.ShowBoard();
         // _board.EveryRound += (s, e) => Console.Read();
@@ -30,11 +30,6 @@ public class Simulation
             _board.UpdateBoard();
             _board.MoveRound();
             DrawProgressBar(i, Length, 50);
-            // var key = Console.ReadKey(true);
-            // if (key.Key == ConsoleKey.Q)
-            // {
-            //     break;
-            // }
         }
 
         output2.Save();
@@ -45,9 +40,8 @@ public class Simulation
         Console.CursorLeft = 0;
         double percent = (double)progress / total;
         int filledBars = (int)(percent * barWidth);
-        // Console.WriteLine($"{percent} {filledBars} {barWidth - filledBars}");
         string bar = new string('#', filledBars) + new string('-', barWidth - filledBars);
-        Console.Write($"[{bar}] {progress}%");
+        Console.Write($"[{bar}] {filledBars}/{total}");
     }
 
     static void Main(string[] args)

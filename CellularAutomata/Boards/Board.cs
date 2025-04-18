@@ -42,20 +42,34 @@ public class Board<T> : IBoard<T> where T : Enum, IConvertible
     }
     public void UpdateBoard()
     {
-        for (int i = 1; i <= Height; i++)
+        // for (int i = 1; i <= Height; i++)
+        // {
+        //     for (int j = 1; j <= Width; j++)
+        //     {
+        //         Cells[i, j].UpdateCell(new Neighborhood<Cell<T>, T>(AliveNeighbors(i,j)));
+        //     }
+        // }
+        // for (int i = 1; i <= Height; i++)
+        // {
+        //     for (int j = 1; j <= Width; j++)
+        //     {
+        //         Cells[i, j].MoveStatus();
+        //     }
+        // }
+        Parallel.For(1, Height + 1, i =>
         {
             for (int j = 1; j <= Width; j++)
             {
-                Cells[i, j].UpdateCell(new Neighborhood<Cell<T>, T>(AliveNeighbors(i,j)));
+                Cells[i, j].UpdateCell(new Neighborhood<Cell<T>, T>(AliveNeighbors(i, j)));
             }
-        }
-        for (int i = 1; i <= Height; i++)
+        });
+        Parallel.For(1, Height + 1, i =>
         {
             for (int j = 1; j <= Width; j++)
             {
                 Cells[i, j].MoveStatus();
             }
-        }
+        });
     }
     public int[] AliveNeighbors(int i, int j)
     {
@@ -65,8 +79,8 @@ public class Board<T> : IBoard<T> where T : Enum, IConvertible
         int[] states = new int[Enum.GetNames(typeof(T)).Length];
         foreach (T state in neighbours)
         {
-            if (state is WallCell<T>)
-                continue;
+            // if (state is WallCell<T>)
+            //     continue;
             states[(int)(object)state]++;
         }
         return states;
