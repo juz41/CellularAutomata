@@ -15,22 +15,7 @@ public class Simulation
 
     public Simulation()
     {
-        int n = Enum.GetNames(typeof(Basic)).Length;
-        var rule = new List<(int a, int b)>[n, 2, n];
-        for (int i = 0; i < n; i++)
-        for (int j = 0; j < 2; j++)
-        for (int k = 0; k < n; k++)
-            rule[i, j, k] = new List<(int a, int b)>();
-
-        // if cell in state a is in range of <a,b> then it stays goes up depending on second index of _rules
-        // goes down otherwise
-        // (a,b)[i,j,k] -> a,b is range (inclusive)
-        // i is current state, j is down/up, last one is all states to match
-        rule[0, 1, 1].Add((3, 3)); // Becomes alive if exactly 3 alive neighbors
-        rule[1, 0, 1].Add((0, 1)); // Dies if <2 or >3 alive neighbors
-        rule[1, 0, 1].Add((4, 8)); // Dies if <2 or >3 alive neighbors
-        
-        _board = new Board<Basic>(100, 100, rule);
+        _board = new Board<Basic>(100, 100, Rules.BasicClassic());
     }
 
     public void Run()
