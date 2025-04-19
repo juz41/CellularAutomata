@@ -14,12 +14,23 @@
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-    <StackPanel>
-        <Panel>
-            <Image Name="MainImage" Margin="20" Height="500" Width="500" 
-                   Source="/Assets/output.png"/>
-        </Panel>
-        <Button HorizontalAlignment="Center" Click="NextOnClick">Next</Button>
-    </StackPanel>
+    <Grid>
+        <Image Name="MainImage" 
+               Source="/Assets/output.png"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Stretch="None"/>
+
+        <Button Content="Next" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Bottom" 
+                Margin="0,0,0,20"
+                Click="NextOnClick"
+                Background="Red"
+                Foreground="White"
+                Padding="10,5"
+                FontWeight="Bold"/>
+    </Grid>
+
 
 </Window>

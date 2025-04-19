@@ -22,8 +22,8 @@ public class GifOutput<T> where T : Enum, IConvertible
         _image = new ImageOutput<T>(board, cellSize, mapping);
         Board = board;
         this._cellSize = cellSize;
-        _imageWidth = Board.Width * cellSize;
-        _imageHeight = Board.Height * cellSize;
+        _imageWidth = Board.Width * _cellSize;
+        _imageHeight = Board.Height * _cellSize;
         _gif = new Image<Rgba32>(_imageWidth, _imageHeight);
     }
 

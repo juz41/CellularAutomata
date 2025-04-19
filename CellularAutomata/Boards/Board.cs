@@ -15,7 +15,7 @@ public class Board<T> : IBoard<T> where T : Enum, IConvertible
     public readonly Cell<T>[,] Cells;
     private readonly int _n = Enum.GetNames(typeof(T)).Length;
     public event EventHandler EveryRound;
-    public Board(int height, int width, List<(int a, int b)>[,,]? rule)
+    public Board(int height, int width, List<Func<Neighborhood<Cell<T>, T>,bool>>[,]? rule)
     {
         this.Height = height;
         this.Width = width;
