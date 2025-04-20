@@ -68,4 +68,5 @@ public static class Rules
     
     // TODO check if in range with seperate method
     // TODO make Rules class more generic with States
+    // TODO seperate class for Rules
 }

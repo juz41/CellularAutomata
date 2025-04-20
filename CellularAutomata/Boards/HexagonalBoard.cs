@@ -14,6 +14,11 @@ public class HexagonalBoard<T> : IBoard<T> where T : Enum, IConvertible
         throw new NotImplementedException();
     }
 
+    public void Clear()
+    {
+        throw new NotImplementedException();
+    }
+
     public void MoveRound()
     {
         throw new NotImplementedException();

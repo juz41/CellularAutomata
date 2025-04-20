@@ -42,20 +42,6 @@ public class Board<T> : IBoard<T> where T : Enum, IConvertible
     }
     public void UpdateBoard()
     {
-        // for (int i = 1; i <= Height; i++)
-        // {
-        //     for (int j = 1; j <= Width; j++)
-        //     {
-        //         Cells[i, j].UpdateCell(new Neighborhood<Cell<T>, T>(AliveNeighbors(i,j)));
-        //     }
-        // }
-        // for (int i = 1; i <= Height; i++)
-        // {
-        //     for (int j = 1; j <= Width; j++)
-        //     {
-        //         Cells[i, j].MoveStatus();
-        //     }
-        // }
         Parallel.For(1, Height + 1, i =>
         {
             for (int j = 1; j <= Width; j++)
@@ -84,6 +70,18 @@ public class Board<T> : IBoard<T> where T : Enum, IConvertible
             states[(int)(object)state]++;
         }
         return states;
+    }
+
+    public void Clear()
+    {
+        Parallel.For(1, Height + 1, i =>
+        {
+            for (int j = 1; j <= Width; j++)
+            {
+                Cells[i, j].Current = (T)(object)(0);
+                Cells[i, j].Next = (T)(object)(0);
+            }
+        });
     }
     public void MoveRound()
     {

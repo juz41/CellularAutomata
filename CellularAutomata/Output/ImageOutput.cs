@@ -8,7 +8,7 @@ namespace CellularAutomata.Output;
 public class ImageOutput<T> where T : Enum, IConvertible
 {
     public IBoard<T> Board;
-    private readonly int _cellSize;
+    public readonly int CellSize;
     private readonly int _imageWidth;
     private readonly int _imageHeight;
     private readonly Color[]? _mapping;
@@ -20,7 +20,7 @@ public class ImageOutput<T> where T : Enum, IConvertible
         else
             this._mapping = mapping;
         Board = board;
-        this._cellSize = cellSize;
+        this.CellSize = cellSize;
         _imageWidth = Board.Width * cellSize;
         _imageHeight = Board.Height * cellSize;
     }
@@ -33,9 +33,9 @@ public class ImageOutput<T> where T : Enum, IConvertible
             {
                 for (int col = 1; col <= Board.Width; col++)
                 {
-                    for (int i = 0; i < _cellSize; i++)
-                    for (int j = 0; j < _cellSize; j++)
-                        image[(col-1)*_cellSize+i, (row-1)*_cellSize+j] = GetColor(Board[row, col]);
+                    for (int i = 0; i < CellSize; i++)
+                    for (int j = 0; j < CellSize; j++)
+                        image[(col-1)*CellSize+i, (row-1)*CellSize+j] = GetColor(Board[row, col]);
                 }
             }
             image.Save(filename);
@@ -43,17 +43,17 @@ public class ImageOutput<T> where T : Enum, IConvertible
     }
     public Image<Rgba32> GenerateImage()
     {
-        int imageWidth = Board.Width * _cellSize;
-        int imageHeight = Board.Height * _cellSize;
+        int imageWidth = Board.Width * CellSize;
+        int imageHeight = Board.Height * CellSize;
         var image = new Image<Rgba32>(imageWidth, imageHeight);
 
         for (int row = 1; row <= Board.Height; row++)
         {
             for (int col = 1; col <= Board.Width; col++)
             {
-                for (int i = 0; i < _cellSize; i++)
-                for (int j = 0; j < _cellSize; j++)
-                    image[(col - 1) * _cellSize + i, (row - 1) * _cellSize + j] = GetColor(Board[row, col]);
+                for (int i = 0; i < CellSize; i++)
+                for (int j = 0; j < CellSize; j++)
+                    image[(col - 1) * CellSize + i, (row - 1) * CellSize + j] = GetColor(Board[row, col]);
             }
         }
         return image;

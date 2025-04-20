@@ -24,17 +24,19 @@ public partial class MainWindow : Window
         this.Width = 700;
         Board = new Board<Map>(100, 100, Rules.MapClassic());
         ImageOutput = new ImageOutput<Map>(Board, 10, [Color.Aqua, Color.Yellow, Color.Green]);
-        var bitmap = ConvertToAvaloniaBitmap(ImageOutput.GenerateImage());
-        MainImage.Source = bitmap;
-        this.InvalidateVisual();
+        RefreshImage();
     }
 
     private void NextOnClick(object? sender, RoutedEventArgs e)
     {
         ImageOutput.Board.UpdateBoard();
         ImageOutput.Board.MoveRound();
-        MainImage.Source = ConvertToAvaloniaBitmap(ImageOutput.GenerateImage());
-        this.InvalidateVisual();
+        RefreshImage();
+    }
+    private void ResetOnClick(object? sender, RoutedEventArgs e)
+    {
+        ImageOutput.Board.Clear();
+        RefreshImage();
     }
     public Bitmap ConvertToAvaloniaBitmap(Image<Rgba32> image)
     {
@@ -45,5 +47,26 @@ public partial class MainWindow : Window
             var avaloniaBitmap = new Bitmap(memoryStream);
             return avaloniaBitmap;
         }
+    }
+    
+    private void Image_PointerPressed(object? sender, Avalonia.Input.PointerPressedEventArgs e)
+    {
+        if (MainImage.Source is Avalonia.Media.Imaging.Bitmap bitmap)
+        {
+            var point = e.GetPosition(MainImage);
+            var controlWidth = MainImage.Bounds.Width;
+            var controlHeight = MainImage.Bounds.Height;
+            int pixelX = (int)(point.X / controlWidth * ImageOutput.Board.Width)+1;
+            int pixelY = (int)(point.Y / controlHeight * ImageOutput.Board.Height)+1;
+            ImageOutput.Board[pixelY, pixelX].CurrentUp();
+            RefreshImage();
+        }
+    }
+
+    private void RefreshImage()
+    {
+        var bitmap = ConvertToAvaloniaBitmap(ImageOutput.GenerateImage());
+        MainImage.Source = bitmap;
+        this.InvalidateVisual();
     }
 }

@@ -10,27 +10,36 @@
         Title="CellularAvalonia">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-    <Grid>
+
+    <DockPanel LastChildFill="True">
+
+        <!-- Buttons Panel at Bottom -->
+        <StackPanel DockPanel.Dock="Bottom" 
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0,10,0,10"
+                    Spacing="10">
+            <Button Content="Next" 
+                    Click="NextOnClick"
+                    Background="Red"
+                    Foreground="White"
+                    Padding="10,5"
+                    FontWeight="Bold"/>
+            <Button Content="Reset" 
+                    Click="ResetOnClick"
+                    Background="Red"
+                    Foreground="White"
+                    Padding="10,5"
+                    FontWeight="Bold"/>
+        </StackPanel>
+
+        <!-- Image fills the rest -->
         <Image Name="MainImage" 
-               Source="/Assets/output.png"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
-               Stretch="None"/>
-
-        <Button Content="Next" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Bottom" 
-                Margin="0,0,0,20"
-                Click="NextOnClick"
-                Background="Red"
-                Foreground="White"
-                Padding="10,5"
-                FontWeight="Bold"/>
-    </Grid>
-
-
+               Stretch="Uniform"
+               PointerPressed="Image_PointerPressed"/>
+    </DockPanel>
 </Window>
