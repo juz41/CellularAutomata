@@ -5,68 +5,67 @@ namespace CellularAutomata;
 
 public static class Rules
 {
-    public static List<Func<Neighborhood<Cell<Basic>, Basic>,bool>>[,] BasicClassic()
+    public static List<(Func<Neighborhood<Cell<Basic>, Basic>, bool>, Basic)>[]? BasicClassic()
     {
         int n = Enum.GetNames(typeof(Basic)).Length;
-        var rule = new List<Func<Neighborhood<Cell<Basic>, Basic>,bool>>[n,n];
+        var rule = new List<(Func<Neighborhood<Cell<Basic>, Basic>, bool>, Basic)>[n];
         for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-            rule[i, j] = new List<Func<Neighborhood<Cell<Basic>, Basic>,bool>>();
+            rule[i] = new ();
 
         // if cell in state a is in range of <a,b> then it stays goes up depending on second index of _rules
         // goes down otherwise
         // (a,b)[i,j,k] -> a,b is range (inclusive)
         // i is current state, j is down/up, last one is all states to match
-        rule[(int)Basic.Dead, (int)Basic.Alive].Add(nei => nei[(int)Basic.Alive] == 3);
-        rule[(int)Basic.Alive, (int)Basic.Dead].Add(nei => nei[(int)Basic.Alive] >= 0 && nei[(int)Basic.Alive] <= 1);
-        rule[(int)Basic.Alive, (int)Basic.Alive].Add(nei => nei[(int)Basic.Alive] >= 4 && nei[(int)Basic.Alive] <= 8);
+        rule[(int)Basic.Dead].Add((nei => nei[(int)Basic.Alive] == 3, Basic.Alive));
+        rule[(int)Basic.Alive].Add((nei => nei[(int)Basic.Alive] >= 0 && nei[(int)Basic.Alive] <= 1, Basic.Dead));
+        rule[(int)Basic.Alive].Add((nei => nei[(int)Basic.Alive] >= 4 && nei[(int)Basic.Alive] <= 8, Basic.Alive));
         return rule;
     }
     //https://en.m.wikipedia.org/wiki/Day_and_Night_(cellular_automaton)
-    public static List<Func<Neighborhood<Cell<Basic>, Basic>,bool>>[,] BasicDayAndNight()
+    public static List<(Func<Neighborhood<Cell<Basic>, Basic>, bool>, Basic)>[]? BasicDayAndNight()
     {
         int n = Enum.GetNames(typeof(Basic)).Length;
-        var rule = new List<Func<Neighborhood<Cell<Basic>, Basic>,bool>>[n,n];
+        var rule = new List<(Func<Neighborhood<Cell<Basic>, Basic>, bool>, Basic)>[n];
         for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-            rule[i, j] = new List<Func<Neighborhood<Cell<Basic>, Basic>,bool>>();
+            rule[i] = new ();
         
-        rule[(int)Basic.Dead, (int)Basic.Alive].Add(nei => nei[(int)Basic.Alive] == 3);
-        rule[(int)Basic.Dead, (int)Basic.Alive].Add(nei => 6 <= nei[(int)Basic.Alive] || nei[(int)Basic.Alive] >= 8);
-        rule[(int)Basic.Alive, (int)Basic.Dead].Add(nei => nei[(int)Basic.Alive] >= 0 && nei[(int)Basic.Alive] <= 2);
-        rule[(int)Basic.Alive, (int)Basic.Dead].Add(nei => nei[(int)Basic.Alive] == 5);
+        rule[(int)Basic.Dead].Add((nei => nei[(int)Basic.Alive] == 3, Basic.Alive));
+        rule[(int)Basic.Dead].Add((nei => 6 <= nei[(int)Basic.Alive] || nei[(int)Basic.Alive] >= 8, Basic.Alive));
+        rule[(int)Basic.Alive].Add((nei => nei[(int)Basic.Alive] >= 0 && nei[(int)Basic.Alive] <= 2, Basic.Dead));
+        rule[(int)Basic.Alive].Add((nei => nei[(int)Basic.Alive] == 5, Basic.Dead));
         return rule;
     }
     //https://en.wikipedia.org/wiki/Seeds_(cellular_automaton)
-    public static List<Func<Neighborhood<Cell<Basic>, Basic>,bool>>[,] BasicSeeds()
+    public static List<(Func<Neighborhood<Cell<Basic>, Basic>, bool>, Basic)>[]? BasicSeeds()
     {
         int n = Enum.GetNames(typeof(Basic)).Length;
-        var rule = new List<Func<Neighborhood<Cell<Basic>, Basic>,bool>>[n,n];
+        var rule = new List<(Func<Neighborhood<Cell<Basic>, Basic>, bool>, Basic)>[n];
         for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-            rule[i, j] = new List<Func<Neighborhood<Cell<Basic>, Basic>,bool>>();
+            rule[i] = new();
         
-        rule[(int)Basic.Dead, (int)Basic.Alive].Add(nei => nei[(int)Basic.Alive] == 2);
-        rule[(int)Basic.Alive, (int)Basic.Dead].Add(nei => nei[(int)Basic.Alive] >= 0 && nei[(int)Basic.Alive] <= 8);
+        rule[(int)Basic.Dead].Add((nei => nei[(int)Basic.Alive] == 2, Basic.Alive));
+        rule[(int)Basic.Alive].Add((nei => nei[(int)Basic.Alive] >= 0 && nei[(int)Basic.Alive] <= 8, Basic.Dead));
         return rule;
     }
-    public static List<Func<Neighborhood<Cell<Map>, Map>,bool>>[,] MapClassic()
+    public static List<(Func<Neighborhood<Cell<Map>, Map>, bool> func, Map state)>[]? MapClassic()
     {
         int n = Enum.GetNames(typeof(Map)).Length;
-        var rule = new List<Func<Neighborhood<Cell<Map>, Map>,bool>>[n,n];
+        var rule = new List<(Func<Neighborhood<Cell<Map>, Map>, bool> func, Map state)>[n];
         for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-            rule[i, j] = new List<Func<Neighborhood<Cell<Map>, Map>,bool>>();
+            rule[i] = new();
         
-        rule[(int)Map.Water, (int)Map.Beach].Add(nei => nei[(int)Map.Beach] >= 6 && nei[(int)Map.Beach] <= 8);
-        rule[(int)Map.Water, (int)Map.Beach].Add(nei => nei[(int)Map.Land] >= 5 && nei[(int)Map.Land] <= 8);
+        rule[(int)Map.Water].Add((nei => nei[(int)Map.Beach] >= 6 && nei[(int)Map.Beach] <= 8, Map.Beach));
+        rule[(int)Map.Water].Add((nei => nei[(int)Map.Land] >= 5 && nei[(int)Map.Land] <= 8, Map.Beach));
         
-        rule[(int)Map.Beach, (int)Map.Water].Add(nei => nei[(int)Map.Water] >= 5 && nei[(int)Map.Water] <= 8);
-        rule[(int)Map.Beach, (int)Map.Land].Add(nei => nei[(int)Map.Beach] >= 5 && nei[(int)Map.Beach] <= 8);
-        rule[(int)Map.Beach, (int)Map.Land].Add(nei => nei[(int)Map.Land] >= 5 && nei[(int)Map.Land] <= 8);
+        rule[(int)Map.Beach].Add((nei => nei[(int)Map.Water] >= 5 && nei[(int)Map.Water] <= 8, Map.Water));
+        rule[(int)Map.Beach].Add((nei => nei[(int)Map.Beach] >= 5 && nei[(int)Map.Beach] <= 8, Map.Land));
+        rule[(int)Map.Beach].Add((nei => nei[(int)Map.Land] >= 5 && nei[(int)Map.Land] <= 8, Map.Land));
         
-        rule[(int)Map.Land, (int)Map.Beach].Add(nei => nei[(int)Map.Water] >= 3 && nei[(int)Map.Water] <= 8);
-        rule[(int)Map.Land, (int)Map.Beach].Add(nei => nei[(int)Map.Beach] >= 4 && nei[(int)Map.Beach] <= 8);
+        rule[(int)Map.Land].Add((nei => nei[(int)Map.Water] >= 3 && nei[(int)Map.Water] <= 8, Map.Beach));
+        rule[(int)Map.Land].Add((nei => nei[(int)Map.Beach] >= 4 && nei[(int)Map.Beach] <= 8, Map.Beach));
         return rule;
     }
+    
+    // TODO check if in range with seperate method
+    // TODO make Rules class more generic with States
 }
