@@ -4,10 +4,10 @@ public class Cell<T> where T : Enum, IConvertible
 {
     public T Current;
     public T Next;
-    private readonly List<(Func<Neighborhood<Cell<T>, T>, bool> func, T state)>[]? _rules;
+    private readonly Rules<T> _rules;
     private readonly int _n = Enum.GetNames(typeof(T)).Length;
 
-    public Cell(List<(Func<Neighborhood<Cell<T>, T>, bool>, T)>[] rules, int state = 0)
+    public Cell(Rules<T> rules, int state = 0)
     {
         this.Current = (T)(object)(state % _n);
         this.Next = (T)(object)(0);
@@ -16,19 +16,7 @@ public class Cell<T> where T : Enum, IConvertible
 
     public virtual void UpdateCell(Neighborhood<Cell<T>, T> nei)
     {
-        int curr = (int)(object)Current;
-        Next = Current;
-        for (var i = 0; i < _n; i++)
-        {
-            foreach (var rule in _rules[curr])
-            {
-                if (rule.func(nei) == true)
-                {
-                    this.Next = (T)(object)(rule.state);
-                    return;
-                }
-            }
-        }
+        this.Next = _rules.NextState(this, nei);
     }
 
     public void CurrentUp()

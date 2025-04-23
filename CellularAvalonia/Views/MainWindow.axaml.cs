@@ -15,15 +15,15 @@ namespace CellularAvalonia.Views;
 
 public partial class MainWindow : Window
 {
-    public Board<Map> Board;
-    public ImageOutput<Map> ImageOutput;
+    public Board<Basic> Board;
+    public ImageOutput<Basic> ImageOutput;
     public MainWindow()
     {
         InitializeComponent();
         this.Height = 700;
         this.Width = 700;
-        Board = new Board<Map>(100, 100, Rules.MapClassic());
-        ImageOutput = new ImageOutput<Map>(Board, 10, [Color.Aqua, Color.Yellow, Color.Green]);
+        Board = new Board<Basic>(10, 10, RulesBase.BasicClassic());
+        ImageOutput = new ImageOutput<Basic>(Board, 10, [Color.Aqua, Color.Yellow, Color.Green]);
         RefreshImage();
     }
 

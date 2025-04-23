@@ -6,6 +6,7 @@ namespace CellularAutomata.Cells
     {
         private readonly int _n = Enum.GetNames(typeof(TU)).Length;
         private readonly int[] _states;
+        public int Sum => _states.Sum();
 
         public Neighborhood(int[] states)
         {
@@ -18,6 +19,6 @@ namespace CellularAutomata.Cells
         public int GetNumber(TU state)
         {
             return _states[(int)(object)state];
-        }   
+        }
     }
 }

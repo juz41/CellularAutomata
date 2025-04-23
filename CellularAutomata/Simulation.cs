@@ -10,12 +10,10 @@ namespace CellularAutomata;
 public class Simulation
 {
     private Board<Basic> _board;
-    private const int Length = 100;
-    private static readonly (int, int) CatchNone = (-1, -1);
-
+    private const int Length = 2500;
     public Simulation()
     {
-        _board = new Board<Basic>(100, 100, Rules.BasicSeeds());
+        _board = new Board<Basic>(6, 6, RulesBase.DuelClassic());
     }
 
     public void Run()
@@ -29,7 +27,7 @@ public class Simulation
         {
             _board.UpdateBoard();
             _board.MoveRound();
-            DrawProgressBar(i, Length, 50);
+            DrawProgressBar(i, Length, 100);
         }
 
         output2.Save();
