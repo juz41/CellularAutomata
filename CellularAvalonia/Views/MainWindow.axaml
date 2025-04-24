@@ -39,7 +39,7 @@
         <Image Name="MainImage" 
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
-               Stretch="Uniform"
+               Stretch="Fill"
                PointerPressed="Image_PointerPressed"/>
     </DockPanel>
 </Window>

@@ -79,5 +79,4 @@ public static class RulesBase
     }
     
     // TODO make Rules class more generic with States
-    // TODO seperate class for Rules
 }

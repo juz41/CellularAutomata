@@ -9,17 +9,17 @@ namespace CellularAutomata;
 
 public class Simulation
 {
-    private Board<Basic> _board;
-    private const int Length = 2500;
+    private Board<Map> _board;
+    private const int Length = 50;
     public Simulation()
     {
-        _board = new Board<Basic>(6, 6, RulesBase.DuelClassic());
+        _board = new Board<Map>(600, 600, RulesBase.MapClassic());
     }
 
     public void Run()
     {
         // var output = new ConsoleOutput<Basic>(_board);
-        var output2 = new GifOutput<Basic>(_board, 10, [Color.Black, Color.Yellow]);
+        var output2 = new GifOutput<Map>(_board, 1, [Color.Blue, Color.Yellow, Color.Green]);
         // _board.EveryRound += (s, e) => output.ShowBoard();
         _board.EveryRound += (s, e) => output2.ShowBoard();
         // _board.EveryRound += (s, e) => Console.Read();

@@ -1,20 +1,16 @@
 using CellularAutomata.Cells;
-using CellularAutomata.States;
 
 namespace CellularAutomata.Boards;
 public class Board<T> : IBoard<T> where T : Enum, IConvertible
 {
     public int Height { get; private set; }
 
-    public Cell<T> this[int i, int j]
-    {
-        get => Cells[i,j];
-    }
+    public Cell<T> this[int i, int j] => Cells[i,j];
 
     public int Width { get; private set; }
     public readonly Cell<T>[,] Cells;
     private readonly int _n = Enum.GetNames(typeof(T)).Length;
-    public event EventHandler EveryRound;
+    public event EventHandler? EveryRound;
     public Board(int height, int width, Rules<T> rule)
     {
         this.Height = height;
@@ -59,9 +55,12 @@ public class Board<T> : IBoard<T> where T : Enum, IConvertible
     }
     public int[] AliveNeighbors(int i, int j)
     {
-        T[] neighbours = {Cells[i - 1, j - 1].Current, Cells[i - 1, j].Current, Cells[i - 1, j + 1].Current,
+        T[] neighbours =
+        [
+            Cells[i - 1, j - 1].Current, Cells[i - 1, j].Current, Cells[i - 1, j + 1].Current,
             Cells[i, j - 1].Current, Cells[i, j + 1].Current,
-            Cells[i + 1, j - 1].Current, Cells[i + 1, j].Current, Cells[i + 1, j + 1].Current};
+            Cells[i + 1, j - 1].Current, Cells[i + 1, j].Current, Cells[i + 1, j + 1].Current
+        ];
         int[] states = new int[Enum.GetNames(typeof(T)).Length];
         foreach (T state in neighbours)
         {
